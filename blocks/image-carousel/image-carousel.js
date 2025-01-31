@@ -1,11 +1,12 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
 /**
- * Creates a YouTube embed from URL
+ * Creates a YouTube embed from URL with autoplay support
  * @param {string} url YouTube URL
+ * @param {boolean} autoplay Whether to autoplay the video
  * @returns {HTMLElement} Iframe element
  */
-function createYouTubeEmbed(url) {
+function createYouTubeEmbed(url, autoplay = false) {
   const videoId = url.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([^"&?\/\s]{11})/)?.[1];
   
   if (!videoId) return null;
@@ -14,7 +15,8 @@ function createYouTubeEmbed(url) {
   wrapper.className = 'image-carousel-video-wrapper';
   
   const iframe = document.createElement('iframe');
-  iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0`;
+  // Add autoplay=1 and mute=1 (required for autoplay) to URL if autoplay is true
+  iframe.src = `https://www.youtube.com/embed/${videoId}?rel=0&enablejsapi=1${autoplay ? '&autoplay=1&mute=1' : ''}`;
   iframe.title = 'YouTube video player';
   iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
   iframe.allowFullscreen = true;
@@ -76,6 +78,42 @@ function updateThumbnails(block, activeIndex) {
 }
 
 /**
+ * Handles video playback when slide changes
+ * @param {Element} block The carousel block element
+ * @param {number} index The active slide index
+ */
+function handleVideoPlayback(block, index) {
+  const slides = block.querySelectorAll('.image-carousel-slide');
+  
+  // Pause all videos
+  slides.forEach((slide) => {
+    const iframe = slide.querySelector('iframe');
+    if (iframe) {
+      // Post message to pause video
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      // Replace with non-autoplay version
+      const videoWrapper = iframe.closest('.image-carousel-video-wrapper');
+      if (videoWrapper) {
+        const url = new URL(iframe.src).pathname.split('/').pop();
+        const newEmbed = createYouTubeEmbed(`https://youtube.com/watch?v=${url}`, false);
+        if (newEmbed) videoWrapper.replaceWith(newEmbed);
+      }
+    }
+  });
+  
+  // Start video in active slide
+  const activeSlide = slides[index];
+  if (activeSlide && activeSlide.classList.contains('video-slide')) {
+    const iframe = activeSlide.querySelector('iframe');
+    if (iframe) {
+      const url = new URL(iframe.src).pathname.split('/').pop();
+      const autoplayEmbed = createYouTubeEmbed(`https://youtube.com/watch?v=${url}`, true);
+      if (autoplayEmbed) iframe.closest('.image-carousel-video-wrapper').replaceWith(autoplayEmbed);
+    }
+  }
+}
+
+/**
  * Scrolls to a specific slide with fade effect
  * @param {Element} block The carousel block element
  * @param {number} index The target slide index
@@ -96,6 +134,9 @@ function scrollToSlide(block, index) {
 
   // Add active class to target slide
   slideElements[index].classList.add('active');
+  
+  // Handle video playback
+  handleVideoPlayback(block, index);
   
   updateIndicators(block, index);
   updateThumbnails(block, index);
