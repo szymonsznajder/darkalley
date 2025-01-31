@@ -1,0 +1,191 @@
+/* Container and wrapper styles following Franklin patterns */
+.image-carousel {
+  margin: 0 auto;
+  max-width: 1200px;
+  position: relative;
+  width: 100%;
+}
+
+/* Slides container */
+.image-carousel-slides {
+  position: relative;
+  height: min(50vw, calc(100dvh - var(--header-height))); /* Match slide height */
+  overflow: hidden; /* Change from scroll to hidden */
+}
+
+/* Update slide styles for fade effect */
+.image-carousel-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  pointer-events: none;
+}
+
+.image-carousel-slide.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.image-carousel-slide picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.image-carousel-slide img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+/* Navigation buttons */
+.image-carousel-navigation {
+  display: flex;
+  justify-content: space-between;
+  left: 12px;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.image-carousel-navigation button {
+  background-color: rgba(19 19 19 / 25%);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 44px;
+  padding: 0;
+  transition: background-color 0.2s;
+  width: 44px;
+}
+
+.image-carousel-navigation button:hover,
+.image-carousel-navigation button:focus-visible {
+  background-color: rgba(19 19 19 / 75%);
+}
+
+.image-carousel-navigation button::after {
+  border: 2px solid #fff;
+  border-bottom: 0;
+  border-left: 0;
+  content: '';
+  display: block;
+  height: 12px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  width: 12px;
+}
+
+.image-carousel-navigation .prev::after {
+  transform: translate(-25%, -50%) rotate(-135deg);
+}
+
+.image-carousel-navigation .next::after {
+  transform: translate(-75%, -50%) rotate(45deg);
+}
+
+/* Indicators */
+.image-carousel-indicators {
+  bottom: 16px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  right: 0;
+  z-index: 2;
+}
+
+.image-carousel-indicator {
+  background-color: rgba(255 255 255 / 50%);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 12px;
+  padding: 0;
+  transition: background-color 0.2s;
+  width: 12px;
+}
+
+.image-carousel-indicator.active,
+.image-carousel-indicator:hover,
+.image-carousel-indicator:focus-visible {
+  background-color: #fff;
+}
+
+@media (width >= 900px) {
+  .image-carousel-navigation {
+    left: 24px;
+    right: 24px;
+  }
+}
+
+/* Thumbnails */
+.image-carousel-thumbnails {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 16px;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.image-carousel-thumbnail {
+  background: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  flex: 0 0 auto;
+  height: 60px;
+  padding: 0;
+  transition: border-color 0.2s;
+  width: 80px;
+}
+
+.image-carousel-thumbnail.active {
+  border-color: var(--link-color, #0066cc);
+}
+
+.image-carousel-thumbnail img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+/* Hide thumbnails on small screens */
+@media (width < 600px) {
+  .image-carousel-thumbnails {
+    display: none;
+  }
+}
+
+/* Video slide styles */
+.image-carousel-slide.video-slide {
+  background-color: #000;
+}
+
+.image-carousel-video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-carousel-video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Ensure video slides maintain aspect ratio */
+.image-carousel-slide.video-slide .image-carousel-video-wrapper {
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+} 
