@@ -24,6 +24,32 @@ function createYouTubeEmbed(url) {
 }
 
 /**
+ * Creates a YouTube thumbnail preview
+ * @param {string} url YouTube URL
+ * @returns {HTMLElement} Preview element
+ */
+function createYouTubePreview(url) {
+  const videoId = url.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([^"&?\/\s]{11})/)?.[1];
+  
+  if (!videoId) return null;
+  
+  const wrapper = document.createElement('div');
+  wrapper.className = 'image-carousel-preview-wrapper';
+  
+  // Create play button overlay
+  const playButton = document.createElement('div');
+  playButton.className = 'youtube-play-button';
+  
+  // Create preview image
+  const img = document.createElement('img');
+  img.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+  img.alt = 'YouTube video preview';
+  
+  wrapper.append(img, playButton);
+  return wrapper;
+}
+
+/**
  * Updates the active indicator
  * @param {Element} block The carousel block element
  * @param {number} activeIndex The active slide index
@@ -188,13 +214,13 @@ export default function decorate(block) {
         slideDiv.classList.add('video-slide');
         slideDiv.append(videoEmbed);
         
-        // Use video thumbnail for the thumbnail navigation
-        const videoId = link.href.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([^"&?\/\s]{11})/)?.[1];
-        if (videoId) {
-          const img = document.createElement('img');
-          img.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-          img.alt = link.textContent || 'YouTube video';
-          slide.append(img);
+        // Replace link with preview in original content
+        const preview = createYouTubePreview(link.href);
+        if (preview) {
+          const linkWrapper = document.createElement('div');
+          linkWrapper.className = 'youtube-link-wrapper';
+          linkWrapper.innerHTML = `<p class="youtube-url">${link.href}</p>`;
+          link.replaceWith(preview, linkWrapper);
         }
       }
     } else {
