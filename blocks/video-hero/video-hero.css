@@ -1,0 +1,125 @@
+.video-hero-container .video-hero-wrapper {
+  max-width: unset;
+  padding: 0;
+}
+
+.video-hero {
+  min-height: 100vh;
+  padding: 40px 24px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: var(--dark-color);
+}
+
+/* Video background */
+.video-hero-background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.video-hero-background iframe,
+.video-hero-background video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* Ensure 16:9 aspect ratio coverage */
+@media (aspect-ratio > 16 / 9) {
+  .video-hero-background iframe,
+  .video-hero-background video {
+    width: 100vw;
+    height: 56.25vw; /* 16:9 */
+  }
+}
+
+@media (aspect-ratio < 16 / 9) {
+  .video-hero-background iframe,
+  .video-hero-background video {
+    width: 177.78vh; /* 16:9 */
+    height: 100vh;
+  }
+}
+
+/* Content overlay */
+.video-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  width: 100%;
+  text-align: center;
+  color: var(--background-color);
+  margin: 0 auto;
+}
+
+.video-hero-content h1 {
+  color: var(--background-color);
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-xxl);
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0 0 0.5em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.video-hero-content h2 {
+  color: var(--background-color);
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-xl);
+  font-weight: 400;
+  line-height: 1.4;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* Optional overlay for better text readability */
+.video-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.2) 50%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  z-index: 0;
+}
+
+/* Reduced motion fallback */
+.video-hero.no-video {
+  background-color: var(--dark-color);
+}
+
+/* Responsive adjustments */
+@media (width >= 900px) {
+  .video-hero {
+    padding: 60px 32px;
+  }
+}
+
+@media (width < 600px) {
+  .video-hero {
+    min-height: 80vh;
+  }
+
+  .video-hero-content h1 {
+    font-size: var(--heading-font-size-xl);
+  }
+
+  .video-hero-content h2 {
+    font-size: var(--heading-font-size-l);
+  }
+}
