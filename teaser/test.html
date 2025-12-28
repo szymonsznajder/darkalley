@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teaser Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="stylesheet" href="./teaser.css">
+
+    <style>
+        /* Test page styles */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 100%;
+            margin: 0;
+            padding: 2rem;
+            background-color: #f5f5f5;
+        }
+
+        .test-section {
+            background: white;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .test-section h2 {
+            margin-top: 0;
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 0.5rem;
+        }
+
+        .test-description {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #007bff;
+        }
+
+        /* CSS Variables for testing */
+        :root {
+            --spacing-xs: 0.5rem;
+            --spacing-s: 1rem;
+            --spacing-m: 1.5rem;
+            --spacing-l: 2rem;
+            --spacing-xl: 3rem;
+            --heading-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --body-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --heading-font-size-l: 2rem;
+            --heading-font-size-xl: 2.5rem;
+            --heading-font-size-xxl: 3rem;
+            --body-font-size-s: 0.875rem;
+            --body-font-size-m: 1rem;
+            --body-font-size-l: 1.125rem;
+            --primary-color: #007bff;
+            --primary-color-dark: #0056b3;
+            --color-white: #fff;
+            --text-color: #333;
+            --heading-color: #222;
+            --border-radius: 8px;
+            --background-color: #000;
+        }
+    </style>
+
+    <script type="module">
+        import { loadBlock } from '/scripts/aem.js';
+
+        // Wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Load all teaser blocks
+            const blocks = document.querySelectorAll('.teaser.block');
+
+            for (const block of blocks) {
+                try {
+                    await loadBlock(block);
+                    console.log('Block loaded successfully:', block);
+                } catch (error) {
+                    console.error('Failed to load block:', block, error);
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>Teaser Block - Test Cases</h1>
+    <p>Testing various configurations of the teaser block with different media types and content.</p>
+
+    <!-- Test 1: Image with Single Button -->
+    <div class="test-section">
+        <h2>Test 1: Image Teaser with Single Button</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> Basic image display, title, description, and single button
+        </div>
+        <div class="teaser block">
+            <div>
+                <div>
+                    <picture>
+                        <source type="image/webp" srcset="https://picsum.photos/800/600?random=1" media="(min-width: 600px)">
+                        <img src="https://picsum.photos/800/600?random=1" alt="Sample product image" loading="lazy">
+                    </picture>
+                </div>
+                <div>
+                    <h2>New Product Launch</h2>
+                    <p>Discover our latest innovation that combines cutting-edge technology with elegant design. Available now for pre-order.</p>
+                    <p><a href="#learn-more">Learn More</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test 2: Image with Multiple Buttons -->
+    <div class="test-section">
+        <h2>Test 2: Image Teaser with Multiple Buttons</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> Multiple buttons (primary and secondary styling)
+        </div>
+        <div class="teaser block">
+            <div>
+                <div>
+                    <picture>
+                        <img src="https://picsum.photos/800/600?random=2" alt="Summer sale banner" loading="lazy">
+                    </picture>
+                </div>
+                <div>
+                    <h2>Summer Sale</h2>
+                    <p>Up to 50% off on selected items. Limited time offer - shop now and save big!</p>
+                    <p>Don't miss out on these incredible deals.</p>
+                    <p><a href="#shop">Shop Now</a></p>
+                    <p><a href="#catalog">View Catalog</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test 3: YouTube Video -->
+    <div class="test-section">
+        <h2>Test 3: YouTube Video Teaser</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> YouTube video embedding, video detection
+        </div>
+        <div class="teaser block">
+            <div>
+                <div>
+                    <p><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">https://www.youtube.com/watch?v=dQw4w9WgXcQ</a></p>
+                </div>
+                <div>
+                    <h2>Watch Our Story</h2>
+                    <p>See how we're transforming the industry and making a positive impact on communities worldwide.</p>
+                    <p>Join us on this incredible journey.</p>
+                    <p><a href="#join">Get Involved</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test 4: YouTube Video (Short URL) -->
+    <div class="test-section">
+        <h2>Test 4: YouTube Video (youtu.be format)</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> YouTube short URL format detection
+        </div>
+        <div class="teaser block">
+            <div>
+                <div>
+                    <p><a href="https://youtu.be/jNQXAC9IVRw">https://youtu.be/jNQXAC9IVRw</a></p>
+                </div>
+                <div>
+                    <h3>Tech Tutorial Series</h3>
+                    <p>Learn essential skills with our comprehensive video tutorials.</p>
+                    <p><a href="#tutorials">Browse All Tutorials</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test 5: Asset Video (MP4) -->
+    <div class="test-section">
+        <h2>Test 5: Asset Video Teaser</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> Video file detection and video element creation
+        </div>
+        <div class="teaser block">
+            <div>
+                <div>
+                    <p><a href="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4">Product Demo Video</a></p>
+                </div>
+                <div>
+                    <h2>See It In Action</h2>
+                    <p>Watch our comprehensive product demonstration and learn how easy it is to get started.</p>
+                    <p>This quick 2-minute video covers all the basics.</p>
+                    <p><a href="#trial">Start Free Trial</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test 6: Long Description -->
+    <div class="test-section">
+        <h2>Test 6: Teaser with Long Description</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> Multiple paragraphs, H2 heading
+        </div>
+        <div class="teaser block">
+            <div>
+                <div>
+                    <picture>
+                        <img src="https://picsum.photos/800/600?random=3" alt="Conference venue" loading="lazy">
+                    </picture>
+                </div>
+                <div>
+                    <h2>Annual Tech Conference 2024</h2>
+                    <p>Join industry leaders, innovators, and visionaries at the premier technology event of the year.</p>
+                    <p>Three days of inspiring keynotes, hands-on workshops, and networking opportunities that will shape the future of technology.</p>
+                    <p>Early bird tickets available until March 1st. Don't miss this opportunity to connect with peers and learn from the best.</p>
+                    <p><a href="#register">Register Now</a></p>
+                    <p><a href="#schedule">View Schedule</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test 7: Different Heading Levels -->
+    <div class="test-section">
+        <h2>Test 7: Different Heading Levels (H3, H4)</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> H3 and H4 heading support
+        </div>
+        <div class="teaser block">
+            <div>
+                <div>
+                    <picture>
+                        <img src="https://picsum.photos/800/600?random=4" alt="Webinar screenshot" loading="lazy">
+                    </picture>
+                </div>
+                <div>
+                    <h4>Weekly Webinar</h4>
+                    <p>Join our expert every Thursday for insights and tips.</p>
+                    <p><a href="#webinar">Sign Up</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test 8: Minimal Content -->
+    <div class="test-section">
+        <h2>Test 8: Minimal Content (Title + Button Only)</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> Block with minimal content (no description)
+        </div>
+        <div class="teaser block">
+            <div>
+                <div>
+                    <picture>
+                        <img src="https://picsum.photos/800/600?random=5" alt="Quick action banner" loading="lazy">
+                    </picture>
+                </div>
+                <div>
+                    <h2>Ready to Get Started?</h2>
+                    <p><a href="#start">Start Now</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test 9: Three Buttons -->
+    <div class="test-section">
+        <h2>Test 9: Three Buttons</h2>
+        <div class="test-description">
+            <strong>Tests:</strong> Multiple buttons (primary + multiple secondary)
+        </div>
+        <div class="teaser block">
+            <div>
+                <div>
+                    <picture>
+                        <img src="https://picsum.photos/800/600?random=6" alt="Feature showcase" loading="lazy">
+                    </picture>
+                </div>
+                <div>
+                    <h2>Explore Our Platform</h2>
+                    <p>Choose the option that's right for you and start your journey today.</p>
+                    <p><a href="#trial">Free Trial</a></p>
+                    <p><a href="#demo">Request Demo</a></p>
+                    <p><a href="#pricing">View Pricing</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: 3rem; padding: 2rem; background: #e9ecef; border-radius: 8px;">
+        <h3>Testing Checklist:</h3>
+        <ul>
+            <li>✅ Images load and display correctly</li>
+            <li>✅ YouTube videos embed properly</li>
+            <li>✅ Asset videos play with controls</li>
+            <li>✅ Titles render at correct size</li>
+            <li>✅ Multiple paragraphs display correctly</li>
+            <li>✅ First button has primary styling</li>
+            <li>✅ Additional buttons have secondary styling</li>
+            <li>✅ Responsive layout works on mobile/tablet/desktop</li>
+            <li>✅ Buttons are keyboard accessible</li>
+            <li>✅ All links are clickable</li>
+        </ul>
+    </div>
+</body>
+</html>
